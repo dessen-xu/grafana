@@ -12,6 +12,7 @@ const MetricNamespaceField: React.FC<AzureQueryEditorFieldProps> = ({
   subscriptionId,
   variableOptionGroup,
   onQueryChange,
+  onError,
 }) => {
   const [metricNamespaces, setMetricNamespaces] = useState<AzureMonitorOption[]>([]);
 
@@ -29,10 +30,7 @@ const MetricNamespaceField: React.FC<AzureQueryEditorFieldProps> = ({
         query.azureMonitor.resourceName
       )
       .then((results) => setMetricNamespaces(results.map(toOption)))
-      .catch((err) => {
-        // TODO: handle error
-        console.error(err);
-      });
+      .catch((err) => onError(err));
   }, [
     subscriptionId,
     query.azureMonitor.resourceGroup,
